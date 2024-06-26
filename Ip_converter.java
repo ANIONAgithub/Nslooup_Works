@@ -62,12 +62,6 @@ jl1.setFont(new Font("", Font.PLAIN, 18));
  jl1.setVisible(true);
 jf.add(jl1);
 
-
-
-
-
-
-
 b1.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent e){
        String ipx =tf.getText(); 
