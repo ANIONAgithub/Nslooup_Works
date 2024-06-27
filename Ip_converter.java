@@ -1,103 +1,127 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener.*;
 import java.net.InetAddress;
+import java.awt.event.*;
 
 import javax.swing.*;;
-public class Ip_converter{
+
+public class Ip_converter {
+    private static String re;
+
     public static void main(String[] args) {
-        JFrame jf=new JFrame("Example");
-jf.setSize(300,400);
-jf.setVisible(true);
-jf.setLayout(null);
+        JFrame jf = new JFrame("Example");
+        jf.setSize(300, 400);
+        jf.setVisible(true);
+        jf.setLayout(null);
 
-JLabel jl6 =new JLabel("Flexible Nslookup ");
-jl6.setBounds(550,10,500,60);
-jl6.setFont(new Font("", Font.PLAIN, 24));
-jl6.setVisible(true);
-jf.add(jl6);
+        JLabel jl6 = new JLabel("Flexible Nslookup ");
+        jl6.setBounds(550, 10, 500, 60);
+        jl6.setFont(new Font("", Font.PLAIN, 24));
+        jl6.setVisible(true);
+        jf.add(jl6);
 
+        JLabel jl3 = new JLabel("Host Name or IP Address");
+        jl3.setBounds(500, 260, 300, 70);
+        jl3.setFont(new Font("", Font.PLAIN, 20));
+        jl3.setVisible(true);
+        jf.add(jl3);
 
-JLabel jl4 =new JLabel("***IF YOU WANT TO SEE HOST NAME TO IP THEN WRITE (IP) or IP TO HOST NAME THEN WRITE (HOST) *** ");
-jl4.setBounds(400,90,700,30);
-jl4.setVisible(true);
-jf.add(jl4);
+        JTextField tf = new JTextField();
+        tf.setBounds(500, 325, 300, 40);
+        tf.setFont(new Font("", Font.PLAIN, 18));
+        tf.setEditable(false);
+        tf.setVisible(true);
+        jf.add(tf);
 
-JLabel jl5 =new JLabel("WRITE IP OR HOST (ANY ONE)");
-jl5.setBounds(500,140,500,30);
-jl5.setVisible(true);
-jl5.setFont(new Font("", Font.PLAIN, 18));
-jf.add(jl5);
+        JButton b1 = new JButton("Click ");
+        b1.setBounds(550, 470, 150, 40);
+        b1.setFont(new Font("", Font.PLAIN, 20));
+        b1.setVisible(true);
+        jf.add(b1);
 
-JTextField tf1=new JTextField();
-tf1.setBounds(500,180,300,40);
-tf1.setFont(new Font("", Font.PLAIN, 18));
-tf1.setVisible(true);
-jf.add(tf1);
+        JLabel jl1 = new JLabel();
+        jl1.setBounds(450, 400, 1000, 30);
+        jl1.setFont(new Font("", Font.PLAIN, 24));
+        jl1.setVisible(true);
+        jf.add(jl1);
 
+        JLabel jl4 = new JLabel(
+                "select Any One Option : ");
+        jl4.setBounds(475, 90, 700, 30);
+        jl4.setFont(new Font("", Font.PLAIN, 24));
+        jl4.setVisible(true);
+        jf.add(jl4);
 
-JLabel jl3 =new JLabel("Host Name or IP Address");
-jl3.setBounds(500,240,300,70);
-jl3.setFont(new Font("", Font.PLAIN, 20));
-jl3.setVisible(true);
-jf.add(jl3);
+        JCheckBox jc = new JCheckBox("Domain To Ip ");
+        jc.setBounds(500, 150, 500, 20);
+        jc.setFont(new Font("", Font.PLAIN, 20));
+        jf.add(jc);
+        jc.setVisible(true);
 
-JTextField tf=new JTextField();
-tf.setBounds(500,300,300,40);
-tf.setFont(new Font("", Font.PLAIN, 18));
-tf.setVisible(true);
-jf.add(tf);
+        JCheckBox jc1 = new JCheckBox("Ip To Domain ");
+        jc1.setBounds(500, 200, 500, 30);
+        jc1.setFont(new Font("", Font.PLAIN, 20));
+        jf.add(jc1);
+        jc1.setVisible(true);
+        JLabel jl5 = new JLabel();
+        jl5.setBounds(500, 350, 1000, 30);
+        jl5.setFont(new Font("", Font.PLAIN, 24));
+        jl5.setVisible(true);
+        jf.add(jl5);
 
+        jc.addItemListener(new ItemListener() {
 
+            @Override
+            public void itemStateChanged(java.awt.event.ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    jc1.setSelected(false);
+                    re = "ip";
+                    tf.setEditable(true);
+                }
+            }
+        });
 
-JButton b1 =new JButton("Click ");
-b1.setBounds(570,400,150,40);   
-b1.setFont(new Font("", Font.PLAIN, 20));
-b1.setVisible(true);
-jf.add(b1);
+        jc1.addItemListener(new ItemListener() {
 
-JLabel jl1 =new JLabel();
-jl1.setBounds(500,350,1000,30);
-jl1.setFont(new Font("", Font.PLAIN, 18));
- jl1.setVisible(true);
-jf.add(jl1);
+            @Override
+            public void itemStateChanged(java.awt.event.ItemEvent e) {
+                if (e.getStateChange() == 1) {
+                    jc.setSelected(false);
+                    re = "host";
+                    tf.setEditable(true);
+                }
+            }
+        });
 
-b1.addActionListener(new ActionListener(){
-    public void actionPerformed(ActionEvent e){
-       String ipx =tf.getText(); 
-       String Host =tf.getText(); 
-       String Decition = tf1.getText();
-        try{
+        b1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
 
-    if(Decition.toLowerCase().equals("ip")){       
- String ip =java.net.InetAddress.getByName(Host).getHostAddress();
- jl1.setText(ip + "  Address of  "+ Host );
+                String ipx = tf.getText();
+                String Host = tf.getText();
+                try {
+                    if (re.toLowerCase().equals("ip")) {
+
+                        String ip = java.net.InetAddress.getByName(Host).getHostAddress();
+                        jl1.setText(Host + " Ip Address Is " + ip);
+                    } else if (re.toLowerCase().equals("host")) {
+                        InetAddress inetAddress = InetAddress.getByName(ipx);
+                        String Host_name = inetAddress.getHostName();
+
+                        jl1.setText(ipx + "Domain Name is" + Host);
+                    }
+
+                }
+
+                catch (Exception e1) {
+                    System.out.println(e1);
+                }
+
+            }
+
+        });
+
     }
-else if(Decition.toLowerCase().equals("host")) {
-InetAddress inetAddress =  InetAddress.getByName(ipx);    
-String Host_name =inetAddress.getHostName();
-jl1.setText(Host_name +"Address is "+ipx);
-}
-else {
-    System.out.println("Kindly check your input information ");
-}
 
-}
-        
-    
-
-        catch(Exception ei){
-            System.out.println(ei);
-        }
-
-    }
-
-});
-
-
-
-
-
-}
-    
 }
